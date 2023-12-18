@@ -90,14 +90,27 @@ resource "aws_iam_policy" "lambda_sqs" {
 }
 
 # Define policy document
-# Create Data Source
-data "aws_iam_policy_document" "assume_role" {
+# Create Data Sources
+
+data "aws_iam_policy_document" "assume_role_lambda" {
   statement {
     effect = "Allow"
 
     principals {
       type        = "Service"
       identifiers = ["lambda.amazonaws.com"]
+    }
+    actions = ["sts:AssumeRole"]
+  }
+}
+
+data "aws_iam_policy_document" "assume_role_apigw" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["apigateway.amazonaws.com"]
     }
     actions = ["sts:AssumeRole"]
   }
