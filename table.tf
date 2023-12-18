@@ -2,12 +2,12 @@
 resource "aws_dynamodb_table" "basic-dynamodb-table" {
   name             = "orders"
   billing_mode     = "PAY_PER_REQUEST"
-  hash_key         = "orderID"
+  hash_key         = "orderId"
   stream_enabled   = true
   stream_view_type = "NEW_IMAGE"
 
   attribute {
-    name = "orderID"
+    name = "orderId"
     type = "S"
   }
 
