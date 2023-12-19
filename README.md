@@ -3,6 +3,8 @@ This is a terraform project that automates the deployment of a proof of concept 
 
 ## Architecture
 
+![Architecture](https://github.com/Kelvinskell/terra-serverless/blob/master/images/serverless-solution.png)
+
 The architecture involved sending customer order details to an API Gateway.
 The API Gateway is integrated with an SQS queue that stores the details and triggers a lambda function to process the order. The Lambda function processes the order, extracts important order details and stores them in a DynamoDB table.
 This DynamoDB table has DynamoDB streams enabled which captures all "PUTItem" requests and transmits to a second Lambda function. This second Lambda function will then refine the purchase details and sends to a logistics team via SNS notifications.
