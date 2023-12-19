@@ -90,6 +90,55 @@ resource "aws_iam_policy" "lambda_dynamostreams" {
   })
 }
 
+# Create policy for api gw
+resource "aws_iam_policy" "api" {
+  name = "APIGW-SQS"
+
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:DescribeLogGroups",
+          "logs:DescribeLogStreams",
+          "logs:PutLogEvents",
+          "logs:GetLogEvents",
+          "logs:FilterLogEvents"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "sqs:GetQueueUrl",
+          "sqs:ChangeMessageVisibility",
+          "sqs:ListDeadLetterSourceQueues",
+          "sqs:SendMessageBatch",
+          "sqs:PurgeQueue",
+          "sqs:ReceiveMessage",
+          "sqs:SendMessage",
+          "sqs:GetQueueAttributes",
+          "sqs:CreateQueue",
+          "sqs:ListQueueTags",
+          "sqs:ChangeMessageVisibilityBatch",
+          "sqs:SetQueueAttributes"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": "sqs:ListQueues",
+        "Resource": "*"
+      }      
+    ]
+}
+EOF
+}
+
 # Define policy document
 # Create Data Sources
 
@@ -103,4 +152,9 @@ data "aws_iam_policy_document" "assume_role_lambda" {
     }
     actions = ["sts:AssumeRole"]
   }
+}
+
+resource "aws_iam_role_policy_attachment" "api" {
+  role       = "${aws_iam_role.api.name}"
+  policy_arn = "${aws_iam_policy.api.arn}"
 }
