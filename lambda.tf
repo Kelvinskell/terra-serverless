@@ -13,7 +13,7 @@ resource "aws_lambda_function" "python_lambda2" {
   role          = aws_iam_role.role2.arn
   source_code_hash = filebase64sha256("main2.py.zip")
   runtime = "python3.9"
-  handler = "main.lambda_handler"
+  handler = "main2.lambda_handler"
 }
 
 resource "aws_lambda_event_source_mapping" "sqs_trigger" {
