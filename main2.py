@@ -9,7 +9,7 @@ def lambda_handler(event, context):
         if record['eventName'] == 'INSERT':
             new_record = record['dynamodb']['NewImage']    
             response = client.publish(
-                TargetArn='<Enter Amazon SNS ARN for the POC-Topic>',
+                TargetArn='arn:aws:sns:us-east-1:538578370232:POC-Topic', #THIS ARN MUST BE CHANGED.
                 Message=json.dumps({'default': json.dumps(new_record)}),
                 MessageStructure='json'
             )

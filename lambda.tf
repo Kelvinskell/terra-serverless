@@ -16,8 +16,13 @@ resource "aws_lambda_function" "python_lambda2" {
   handler = "main.lambda_handler"
 }
 
-resource "aws_lambda_event_source_mapping" "example" {
+resource "aws_lambda_event_source_mapping" "sqs_trigger" {
   event_source_arn = aws_sqs_queue.standard_queue.arn
   function_name    = aws_lambda_function.python_lambda.arn
 }
 
+resource "aws_lambda_event_source_mapping" "dynamo_trigger" {
+  event_source_arn  = aws_dynamodb_table.dynamodb-table.stream_arn
+  function_name     = aws_lambda_function.python_lambda2.arn
+  starting_position = "LATEST"
+}
