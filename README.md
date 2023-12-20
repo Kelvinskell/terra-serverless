@@ -15,3 +15,15 @@ This DynamoDB table has DynamoDB streams enabled which captures all "PUTItem" re
 - Run `terraform init` command
 - Run `terraform plan` to view the expected infrstructure changes
 - Run `terraform apply` to deploy the infrastructure.
+
+## Test
+To test this out:
+- Go to the API gateway console, click on the **POC-API**
+- Click on the **POST** method.
+- Add the following into the **Request body**: `{  "item": "latex gloves",
+"customerID":"12345"}`
+- You should get a HTTP 200 response
+- Also you hshould receive an email notification.
+
+## Destroy
+- To tear down the infrastructure, run `terraform destroy`.
