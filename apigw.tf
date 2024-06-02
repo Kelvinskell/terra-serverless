@@ -51,7 +51,7 @@ resource "aws_api_gateway_integration_response" "success_response" {
   selection_pattern = "^2[0-9][0-9]" // regex pattern for any 200 message that comes back from SQS
 
   response_templates = {
-    "application/json" = "{\"message\": \"great success!\"}"
+    "application/json" = "{\"message\": \"Order Successfully processed.\"}"
   }
 
   depends_on = [aws_api_gateway_integration.apigw_integration]
